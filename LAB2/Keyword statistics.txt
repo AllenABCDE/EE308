@@ -1,0 +1,16 @@
+string keyword[] = {"auto","break","case","char","const","continue","default","do","double","else","enum","extern","float","for","goto","if","int","long","register","return","short","signed","sizeof","static","struct","switch","typedef","union","unsigned","void","volatile","while"};
+
+void Keyword () {
+    int num = 0;
+    string line;
+    for (int i = 0; i<content.size(); i++) {
+        line = content[i];
+        for (int j=0; j<32; j++) {
+            size_t fi = line.find(keyword[j], 0);
+            while (fi!=line.npos && judge(line,keyword[j])) {
+                num++;
+                fi = line.find(keyword[j], fi + 1);
+            }
+        }
+    }
+    cout<<"total num: "<<num<<endl;
