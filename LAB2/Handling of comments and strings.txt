@@ -1,0 +1,64 @@
+void handle () {
+    string text,line;
+    size_t j=0,k=0,t=0;
+    int i=0,f=0,r=0;
+    for (i=0; i<content.size(); i++) {
+        line = content[i];
+        if (line.find("\t") != line.npos && line.find("\t") == 0) {   
+            do {
+                k = line.find("\t")+1;
+                line = line.substr(k,line.length()-k);
+            } while (line.find("\t") != line.npos && line.find("\t") == 0);
+            content[i] = line;
+        }
+        if (line.find("//") != line.npos) {    
+            j = line.find("//");     
+            if (j==0) {
+                content.erase(content.begin()+i);     
+                i--;
+            } else {
+                text = line.substr(0,j);       
+                content[i] = text;
+            }
+        } else if (line.find("\"") != line.npos) {     
+            size_t p[50] = {0};
+            k = 0;
+            f = 0;
+            while ((t=line.find("\"",k)) != line.npos) {        
+                p[f] = t;
+                f++;
+                k=t+1;
+            }
+ 
+            p[f] = line.length();
+            text = line.substr(0,p[0]);
+            
+            for (r=1; p[r]!=0; r+=2) {
+                text += line.substr(p[r]+1,p[r+1]-p[r]-1);     
+            }
+            content[i] = text;
+        } else if (line.find("/*") != line.npos) {      
+            j = line.find("/*");
+            k = line.find("*/");
+            
+            if (k != line.npos) {   
+                if (j == 0) {
+                    content[i] = line.substr(k+2,line.length());
+                } else {
+                    content[i] = line.substr(0,j);
+                }
+                i--;
+            } else {
+                content[i] = line.substr(0,j);
+                i += 1;
+                line = content[i];
+                while (line.find("*/") == line.npos) {
+                    content.erase(content.begin()+i);       
+                    line = content[i];
+                }
+                k = line.find("*/")+2;
+                content[i] = line.substr(k,line.length()-k);
+            }
+        }
+    }
+}
