@@ -1,0 +1,12 @@
+void input (string path) {
+    ifstream fp;
+    string text;
+    fp.open(path,ios::in);     
+    if (!fp.is_open()) {
+        cout<<"Error!"<<endl;
+        return;
+    }
+    while (getline(fp, text)) {     
+        content.push_back(text);
+    }
+    fp.close();   
