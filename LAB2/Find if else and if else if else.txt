@@ -1,0 +1,26 @@
+void IfElse (int level) {
+    int sum1 = 0,sum2 = 0;
+    stack<int> s;
+    string line;
+    for (int i = 0; i<content.size(); i++) {
+        line = content[i];
+        if (line.find("if") != line.npos && line.find("else") == line.npos && judge(line, "if")) {     
+            s.push(1);
+        } else if (line.find("if") == line.npos && line.find("else") != line.npos &&  s.empty() == false) {
+            if (s.top() == 1) {
+                sum1++;  
+            } else {
+                sum2++;   
+            }
+            s.pop();    
+            
+        }else  if (line.find("if") != line.npos && line.find("else") != line.npos && judge(line, "if")) {
+            s.push(2);   
+        }
+    }
+    if (level == 3) {
+        cout<<"if-else num: "<<sum1<<endl;
+    } else if (level == 4) {
+        cout<<"if-else num: "<<sum1<<endl;
+        cout<<"if-else-if num: "<<sum2<<endl;
+    }
